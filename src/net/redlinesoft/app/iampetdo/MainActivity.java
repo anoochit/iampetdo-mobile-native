@@ -95,7 +95,7 @@ public class MainActivity extends Activity {
 
 		Log.d("XML", String.valueOf(MyArrList.size()));
 		listItem = (ListView) findViewById(R.id.listItem);
- 		LazyAdapter adapter = new LazyAdapter(this, MyArrList);
+ 		LazyAdapter adapter = new LazyAdapter(this, MyArrList); 		
 		listItem.setAdapter(adapter);
 		listItem.setOnItemClickListener(new OnItemClickListener() {
 
@@ -225,6 +225,8 @@ public class MainActivity extends Activity {
 			NodeList nList = doc.getElementsByTagName("item");
 
 			Log.d("XML", String.valueOf(nList.getLength()));
+			
+			MyArrList.clear();
 
 			for (int temp = 0; temp < nList.getLength(); temp++) {
 				Node nNode = nList.item(temp);
@@ -301,11 +303,14 @@ public class MainActivity extends Activity {
 			break;
 		case R.id.menu_update:
 			Log.d("MENU", "select menu update");
-			 
+			// load content
+			startDownload();
+			parseContent();
+			loadContent();
 			break;		
 		case R.id.menu_refresh:
 			Log.d("MENU", "select menu refresh");
-			
+			loadContent();
 			break;
 		}
 		
