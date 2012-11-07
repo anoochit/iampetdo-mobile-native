@@ -9,5 +9,6 @@
     <string name="text_share_body">Get I am Petdo!  Application from https://play.google.com/store/apps/details?id=</string>
     <string name="menu_settings">Settings</string>
     <string name="title_activity_item">ItemActivity</string>
+    <string name="menu_refresh">Refresh</string>
 
 </resources>

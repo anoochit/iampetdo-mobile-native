@@ -24,6 +24,7 @@ import org.w3c.dom.NodeList;
 import com.google.ads.*;
 
 import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
@@ -59,7 +60,7 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 
 		// check network connection
-		if (checkNetworkStatus()) {
+		if (isNetworkAvailable()) {
 			// load admob
 			// Create the adView
 			AdView adView = new AdView(this, AdSize.BANNER, "a14fdcb18476694");
@@ -94,9 +95,8 @@ public class MainActivity extends Activity {
 
 		Log.d("XML", String.valueOf(MyArrList.size()));
 		listItem = (ListView) findViewById(R.id.listItem);
-		LazyAdapter adapter = new LazyAdapter(this, MyArrList);
+ 		LazyAdapter adapter = new LazyAdapter(this, MyArrList);
 		listItem.setAdapter(adapter);
-
 		listItem.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -275,23 +275,11 @@ public class MainActivity extends Activity {
 		return nValue.getNodeValue().trim();
 	}
 
-	public boolean checkNetworkStatus() {
-		final ConnectivityManager connMgr = (ConnectivityManager) this
-				.getSystemService(Context.CONNECTIVITY_SERVICE);
-		final android.net.NetworkInfo wifi = connMgr
-				.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-		final android.net.NetworkInfo mobile = connMgr
-				.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-		if (wifi.isAvailable()) {
-			Log.d("Network", "Connect via Wifi");
-			return true;
-		} else if (mobile.isAvailable()) {
-			Log.d("Network", "Connect via Mobile network");
-			return true;
-		} else {
-			Log.d("Network", "No network connection");
-			return false;
-		}
+	private boolean isNetworkAvailable() {
+		ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo activeNetworkInfo = connectivityManager
+				.getActiveNetworkInfo();
+		return activeNetworkInfo != null;
 	}
 
 	@Override
@@ -313,9 +301,14 @@ public class MainActivity extends Activity {
 			break;
 		case R.id.menu_update:
 			Log.d("MENU", "select menu update");
-
+			 
+			break;		
+		case R.id.menu_refresh:
+			Log.d("MENU", "select menu refresh");
+			
 			break;
 		}
+		
 		return false;
 
 	}
